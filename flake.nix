@@ -1,11 +1,10 @@
 {
-inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  outputs = { self, nixpkgs, ... }: let
-    pkgs = nixpkgs.legacyPackages."x86_64-linux";
-
-    inherit (pkgs.lib.lists) filter foldl' elem map drop concatLists toList;
-    inherit (pkgs.lib.strings) splitString;
-    inherit (pkgs.lib.attrsets) attrValues mapAttrs genAttrs mapAttrsToList;
+inputs.lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
+  outputs = { self, lib, ... }: let
+    inherit (lib) lib;
+    inherit (lib.lists) filter foldl' elem map drop concatLists toList;
+    inherit (lib.strings) splitString;
+    inherit (lib.attrsets) attrValues mapAttrs genAttrs mapAttrsToList;
   in {
     lib.mkKeyFlake = ks: {
       lib.ssh.withComments = xs: cs: filter (x: foldl' (a: c: a && elem c (drop 2 (splitString " " x))) true (toList cs)) xs;
