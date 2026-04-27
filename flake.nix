@@ -1,6 +1,7 @@
 {
-inputs.lib.url = "github:NixOS/nixpkgs/nixos-unstable?dir=lib";
-  outputs = { self, lib, ... }: let
+inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  outputs = { self, nixpkgs, ... }: let
+    lib = nixpkgs.lib;
     inherit (lib.lists) filter foldl' elem map drop concatLists toList;
     inherit (lib.strings) splitString;
     inherit (lib.attrsets) attrValues mapAttrs genAttrs mapAttrsToList;
